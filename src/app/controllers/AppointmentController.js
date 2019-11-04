@@ -53,6 +53,12 @@ class AppointmentController {
       where: { id: provider_id, provider: true },
     });
 
+    if (req.userId === provider_id) {
+      return res
+        .status(401)
+        .json({ error: 'You cannot create a notification for yourself' });
+    }
+
     if (!isProvider) {
       return res
         .status(401)
